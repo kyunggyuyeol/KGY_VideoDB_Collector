@@ -11,9 +11,8 @@ using System.Net;
 using System.IO;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
-using MySql.Data;
-using MySql.Data.MySqlClient;
 using MediaInfo;
+using MySqlConnector;
 
 
 namespace Video_DB_Collecter
@@ -336,9 +335,9 @@ namespace Video_DB_Collecter
                 dataNo++;
 
                 //메세지를 저장할때 로컬모드 체크
-                if(localmode == true)
+                if (localmode == true)
                 {
-                    if(File.Exists(dataList[dataNo].FilePath))
+                    if (File.Exists(dataList[dataNo].FilePath))
                     {
                         MediaPlayer.URL = dataList[dataNo].FilePath;
                     }
@@ -505,11 +504,11 @@ namespace Video_DB_Collecter
                     string getIndex = MasterTagNo[MasterNO].ToString();
                     //재생할 파일 이름 불러옴
                     var player = masterTag.Where(x => x.mainClip == getIndex).ToList();
-                    
+
                     //마스터 세이브 모드 중 로컬모드 사용일때 파일이 존재하는지 확인해야 한다.
-                    if(localmode == true)
+                    if (localmode == true)
                     {
-                        if(File.Exists(player[0].FilePath))
+                        if (File.Exists(player[0].FilePath))
                         {
                             MediaPlayer.URL = player[0].FilePath;
                         }
@@ -688,11 +687,11 @@ namespace Video_DB_Collecter
                 var player = masterTag.Where(x => x.mainClip == selectName).ToList();
 
                 string playeFileName = player[0].FilePath;
-                
+
                 //마스터 검색시 로컬모드일경우 파일이 있는지 확인해야한다.
-                if(localmode == true)
+                if (localmode == true)
                 {
-                    if(File.Exists(playeFileName))
+                    if (File.Exists(playeFileName))
                     {
                         MediaPlayer.URL = playeFileName;
                     }
@@ -865,7 +864,7 @@ namespace Video_DB_Collecter
                 sb.Append("select A.Message, A.Tag from videomastertag A where A.Cat_Type = '" + cmb_MasterCat.Items[cmb_MasterCat.SelectedIndex].ToString() + "'");
                 sb.Append(" and A.FileLV_1 = '" + filefb + "'");
                 DataSet ds = selectForDataSet(sb.ToString());
-                
+
                 foreach (DataRow item in ds.Tables[0].Rows)
                 {
                     //ds.Tables[0].Rows.Count
